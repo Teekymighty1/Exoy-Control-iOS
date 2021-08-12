@@ -13,6 +13,30 @@
 		32264F942666838D0021F4FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32264F922666838D0021F4FE /* Main.storyboard */; };
 		32264F962666838F0021F4FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32264F952666838F0021F4FE /* Assets.xcassets */; };
 		32264F992666838F0021F4FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32264F972666838F0021F4FE /* LaunchScreen.storyboard */; };
+		3260AD6A26BC3EFC005643BB /* EffectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3260AD6926BC3EFC005643BB /* EffectViewController.swift */; };
+		3260AD7D26BC5507005643BB /* ControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3260AD7C26BC5507005643BB /* ControlViewController.swift */; };
+		32B5776326B98343001BA75A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B5776226B98343001BA75A /* Device.swift */; };
+		32B5777826B98F50001BA75A /* MullerBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776426B98F4F001BA75A /* MullerBold.ttf */; };
+		32B5777926B98F50001BA75A /* MullerBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776526B98F4F001BA75A /* MullerBlack.ttf */; };
+		32B5777A26B98F50001BA75A /* MullerHairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776626B98F4F001BA75A /* MullerHairline.ttf */; };
+		32B5777B26B98F50001BA75A /* MullerBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776726B98F4F001BA75A /* MullerBoldItalic.ttf */; };
+		32B5777C26B98F50001BA75A /* MullerThin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776826B98F4F001BA75A /* MullerThin.ttf */; };
+		32B5777D26B98F50001BA75A /* MullerExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776926B98F4F001BA75A /* MullerExtraBold.ttf */; };
+		32B5777E26B98F50001BA75A /* MullerRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776A26B98F4F001BA75A /* MullerRegular.ttf */; };
+		32B5777F26B98F50001BA75A /* MullerLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776B26B98F4F001BA75A /* MullerLight.ttf */; };
+		32B5778026B98F50001BA75A /* MullerMediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776C26B98F4F001BA75A /* MullerMediumItalic.ttf */; };
+		32B5778126B98F50001BA75A /* MullerHeavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776D26B98F4F001BA75A /* MullerHeavy.ttf */; };
+		32B5778226B98F50001BA75A /* MullerLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776E26B98F4F001BA75A /* MullerLightItalic.ttf */; };
+		32B5778326B98F50001BA75A /* MullerBlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5776F26B98F4F001BA75A /* MullerBlackItalic.ttf */; };
+		32B5778426B98F50001BA75A /* MullerHairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5777026B98F4F001BA75A /* MullerHairlineItalic.ttf */; };
+		32B5778526B98F50001BA75A /* MullerThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5777126B98F4F001BA75A /* MullerThinItalic.ttf */; };
+		32B5778626B98F50001BA75A /* MullerExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5777226B98F4F001BA75A /* MullerExtraBoldItalic.ttf */; };
+		32B5778726B98F50001BA75A /* MullerRegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5777326B98F4F001BA75A /* MullerRegularItalic.ttf */; };
+		32B5778826B98F50001BA75A /* MullerUltraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5777426B98F4F001BA75A /* MullerUltraLightItalic.ttf */; };
+		32B5778926B98F50001BA75A /* MullerHeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5777526B98F4F001BA75A /* MullerHeavyItalic.ttf */; };
+		32B5778A26B98F50001BA75A /* MullerMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5777626B98F4F001BA75A /* MullerMedium.ttf */; };
+		32B5778B26B98F50001BA75A /* MullerUltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B5777726B98F50001BA75A /* MullerUltraLight.ttf */; };
+		32B5779126BBF8D3001BA75A /* Communication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B5779026BBF8D3001BA75A /* Communication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +48,30 @@
 		32264F952666838F0021F4FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32264F982666838F0021F4FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32264F9A2666838F0021F4FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3260AD6926BC3EFC005643BB /* EffectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectViewController.swift; sourceTree = "<group>"; };
+		3260AD7C26BC5507005643BB /* ControlViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlViewController.swift; sourceTree = "<group>"; };
+		32B5776226B98343001BA75A /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		32B5776426B98F4F001BA75A /* MullerBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerBold.ttf; path = ../../../../../Downloads/font/MullerBold.ttf; sourceTree = "<group>"; };
+		32B5776526B98F4F001BA75A /* MullerBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerBlack.ttf; path = ../../../../../Downloads/font/MullerBlack.ttf; sourceTree = "<group>"; };
+		32B5776626B98F4F001BA75A /* MullerHairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerHairline.ttf; path = ../../../../../Downloads/font/MullerHairline.ttf; sourceTree = "<group>"; };
+		32B5776726B98F4F001BA75A /* MullerBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerBoldItalic.ttf; path = ../../../../../Downloads/font/MullerBoldItalic.ttf; sourceTree = "<group>"; };
+		32B5776826B98F4F001BA75A /* MullerThin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerThin.ttf; path = ../../../../../Downloads/font/MullerThin.ttf; sourceTree = "<group>"; };
+		32B5776926B98F4F001BA75A /* MullerExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerExtraBold.ttf; path = ../../../../../Downloads/font/MullerExtraBold.ttf; sourceTree = "<group>"; };
+		32B5776A26B98F4F001BA75A /* MullerRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerRegular.ttf; path = ../../../../../Downloads/font/MullerRegular.ttf; sourceTree = "<group>"; };
+		32B5776B26B98F4F001BA75A /* MullerLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerLight.ttf; path = ../../../../../Downloads/font/MullerLight.ttf; sourceTree = "<group>"; };
+		32B5776C26B98F4F001BA75A /* MullerMediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerMediumItalic.ttf; path = ../../../../../Downloads/font/MullerMediumItalic.ttf; sourceTree = "<group>"; };
+		32B5776D26B98F4F001BA75A /* MullerHeavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerHeavy.ttf; path = ../../../../../Downloads/font/MullerHeavy.ttf; sourceTree = "<group>"; };
+		32B5776E26B98F4F001BA75A /* MullerLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerLightItalic.ttf; path = ../../../../../Downloads/font/MullerLightItalic.ttf; sourceTree = "<group>"; };
+		32B5776F26B98F4F001BA75A /* MullerBlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerBlackItalic.ttf; path = ../../../../../Downloads/font/MullerBlackItalic.ttf; sourceTree = "<group>"; };
+		32B5777026B98F4F001BA75A /* MullerHairlineItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerHairlineItalic.ttf; path = ../../../../../Downloads/font/MullerHairlineItalic.ttf; sourceTree = "<group>"; };
+		32B5777126B98F4F001BA75A /* MullerThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerThinItalic.ttf; path = ../../../../../Downloads/font/MullerThinItalic.ttf; sourceTree = "<group>"; };
+		32B5777226B98F4F001BA75A /* MullerExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerExtraBoldItalic.ttf; path = ../../../../../Downloads/font/MullerExtraBoldItalic.ttf; sourceTree = "<group>"; };
+		32B5777326B98F4F001BA75A /* MullerRegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerRegularItalic.ttf; path = ../../../../../Downloads/font/MullerRegularItalic.ttf; sourceTree = "<group>"; };
+		32B5777426B98F4F001BA75A /* MullerUltraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerUltraLightItalic.ttf; path = ../../../../../Downloads/font/MullerUltraLightItalic.ttf; sourceTree = "<group>"; };
+		32B5777526B98F4F001BA75A /* MullerHeavyItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerHeavyItalic.ttf; path = ../../../../../Downloads/font/MullerHeavyItalic.ttf; sourceTree = "<group>"; };
+		32B5777626B98F4F001BA75A /* MullerMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerMedium.ttf; path = ../../../../../Downloads/font/MullerMedium.ttf; sourceTree = "<group>"; };
+		32B5777726B98F50001BA75A /* MullerUltraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MullerUltraLight.ttf; path = ../../../../../Downloads/font/MullerUltraLight.ttf; sourceTree = "<group>"; };
+		32B5779026BBF8D3001BA75A /* Communication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Communication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +85,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		320739DA267B8C7000098F12 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				32B5776526B98F4F001BA75A /* MullerBlack.ttf */,
+				32B5776F26B98F4F001BA75A /* MullerBlackItalic.ttf */,
+				32B5776426B98F4F001BA75A /* MullerBold.ttf */,
+				32B5776726B98F4F001BA75A /* MullerBoldItalic.ttf */,
+				32B5776926B98F4F001BA75A /* MullerExtraBold.ttf */,
+				32B5777226B98F4F001BA75A /* MullerExtraBoldItalic.ttf */,
+				32B5776626B98F4F001BA75A /* MullerHairline.ttf */,
+				32B5777026B98F4F001BA75A /* MullerHairlineItalic.ttf */,
+				32B5776D26B98F4F001BA75A /* MullerHeavy.ttf */,
+				32B5777526B98F4F001BA75A /* MullerHeavyItalic.ttf */,
+				32B5776B26B98F4F001BA75A /* MullerLight.ttf */,
+				32B5776E26B98F4F001BA75A /* MullerLightItalic.ttf */,
+				32B5777626B98F4F001BA75A /* MullerMedium.ttf */,
+				32B5776C26B98F4F001BA75A /* MullerMediumItalic.ttf */,
+				32B5776A26B98F4F001BA75A /* MullerRegular.ttf */,
+				32B5777326B98F4F001BA75A /* MullerRegularItalic.ttf */,
+				32B5776826B98F4F001BA75A /* MullerThin.ttf */,
+				32B5777126B98F4F001BA75A /* MullerThinItalic.ttf */,
+				32B5777726B98F50001BA75A /* MullerUltraLight.ttf */,
+				32B5777426B98F4F001BA75A /* MullerUltraLightItalic.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		32264F802666838D0021F4FE = {
 			isa = PBXGroup;
 			children = (
@@ -56,15 +131,44 @@
 		32264F8B2666838D0021F4FE /* Exoy Control */ = {
 			isa = PBXGroup;
 			children = (
+				32B5776126B980C2001BA75A /* Controller */,
+				32B5776026B980BD001BA75A /* View */,
+				32B5775F26B980B2001BA75A /* Model */,
+				320739DA267B8C7000098F12 /* Fonts */,
 				32264F8C2666838D0021F4FE /* AppDelegate.swift */,
 				32264F8E2666838D0021F4FE /* SceneDelegate.swift */,
-				32264F902666838D0021F4FE /* ViewController.swift */,
-				32264F922666838D0021F4FE /* Main.storyboard */,
 				32264F952666838F0021F4FE /* Assets.xcassets */,
 				32264F972666838F0021F4FE /* LaunchScreen.storyboard */,
 				32264F9A2666838F0021F4FE /* Info.plist */,
 			);
 			path = "Exoy Control";
+			sourceTree = "<group>";
+		};
+		32B5775F26B980B2001BA75A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				32B5776226B98343001BA75A /* Device.swift */,
+				32B5779026BBF8D3001BA75A /* Communication.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		32B5776026B980BD001BA75A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				32264F922666838D0021F4FE /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		32B5776126B980C2001BA75A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				32264F902666838D0021F4FE /* ViewController.swift */,
+				3260AD6926BC3EFC005643BB /* EffectViewController.swift */,
+				3260AD7C26BC5507005643BB /* ControlViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,9 +228,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32B5777926B98F50001BA75A /* MullerBlack.ttf in Resources */,
+				32B5777826B98F50001BA75A /* MullerBold.ttf in Resources */,
+				32B5778226B98F50001BA75A /* MullerLightItalic.ttf in Resources */,
+				32B5777E26B98F50001BA75A /* MullerRegular.ttf in Resources */,
+				32B5778A26B98F50001BA75A /* MullerMedium.ttf in Resources */,
+				32B5777D26B98F50001BA75A /* MullerExtraBold.ttf in Resources */,
 				32264F992666838F0021F4FE /* LaunchScreen.storyboard in Resources */,
+				32B5778126B98F50001BA75A /* MullerHeavy.ttf in Resources */,
+				32B5778426B98F50001BA75A /* MullerHairlineItalic.ttf in Resources */,
+				32B5777A26B98F50001BA75A /* MullerHairline.ttf in Resources */,
+				32B5778026B98F50001BA75A /* MullerMediumItalic.ttf in Resources */,
+				32B5777F26B98F50001BA75A /* MullerLight.ttf in Resources */,
 				32264F962666838F0021F4FE /* Assets.xcassets in Resources */,
+				32B5778526B98F50001BA75A /* MullerThinItalic.ttf in Resources */,
+				32B5778826B98F50001BA75A /* MullerUltraLightItalic.ttf in Resources */,
 				32264F942666838D0021F4FE /* Main.storyboard in Resources */,
+				32B5778B26B98F50001BA75A /* MullerUltraLight.ttf in Resources */,
+				32B5778326B98F50001BA75A /* MullerBlackItalic.ttf in Resources */,
+				32B5777C26B98F50001BA75A /* MullerThin.ttf in Resources */,
+				32B5778926B98F50001BA75A /* MullerHeavyItalic.ttf in Resources */,
+				32B5777B26B98F50001BA75A /* MullerBoldItalic.ttf in Resources */,
+				32B5778726B98F50001BA75A /* MullerRegularItalic.ttf in Resources */,
+				32B5778626B98F50001BA75A /* MullerExtraBoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,8 +262,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				32264F912666838D0021F4FE /* ViewController.swift in Sources */,
+				3260AD6A26BC3EFC005643BB /* EffectViewController.swift in Sources */,
+				32B5779126BBF8D3001BA75A /* Communication.swift in Sources */,
 				32264F8D2666838D0021F4FE /* AppDelegate.swift in Sources */,
 				32264F8F2666838D0021F4FE /* SceneDelegate.swift in Sources */,
+				3260AD7D26BC5507005643BB /* ControlViewController.swift in Sources */,
+				32B5776326B98343001BA75A /* Device.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
