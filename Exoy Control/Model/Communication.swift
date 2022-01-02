@@ -12,6 +12,7 @@ class Communication {
     var IP: NWEndpoint.Host = ""
     
     var hostUDP: NWEndpoint.Host = ""
+    let endHostUDP:NWEndpoint.Host = "192.168.8.247"
     var portUDP: NWEndpoint.Port = 8888
     
     var gotAnswer = false
@@ -21,9 +22,12 @@ class Communication {
     
     var message: String = ""
     
+    var foundDevicesIP: [String] = []
+    var foundDevices: [[Any]] = [[]]
+    
     func search() {
         var i = 1
-        while !gotAnswer && i < 249 {
+        while i < 254 {
             if (ready) {
                 hostUDP = .init("192.168.8.\(i)")
                 connectToUDP(hostUDP, portUDP)
@@ -31,23 +35,25 @@ class Communication {
                 i+=1
             }
         }
-        
-        if (gotAnswer) {
-            connection?.cancel()
-            return
-        }
+        connectToUDP(hostUDP, portUDP)
         
     }
     
-    func getHostUDP() -> String{
+    func getFoundDevices() -> [[Any]]{
+        search()
         while !gotAnswer {
             
         }
         if gotAnswer {
-            
-            return "\(hostUDP)"
+            gotAnswer = false
+            return foundDevices
         }
-        return ""
+        return []
+    }
+    
+    func connect(num: Int) {
+        hostUDP = .init(foundDevicesIP[num])
+        connectToUDP(hostUDP, portUDP)
     }
     
     func getID() -> Int{
@@ -74,45 +80,52 @@ class Communication {
     
     
     func togglePower(){
-        requestState()
-        print(parseMessage().on)
         if parseMessage().on {
-            sendUDP("P_OFF")
+            sendUDP([1,0,0])
         } else {
-            sendUDP("P_ON")
+            sendUDP([1,0,1])
         }
         receiveUDP(IP: hostUDP)
+        print(foundDevices)
     }
-    func setCurrentMode(mode: Int) {
-        sendUDP("EFF\(mode)")
+    func setCurrentMode(mode: UInt8) {
+        sendUDP([2,0,mode])
         receiveUDP(IP: hostUDP)
     }
-    func setBrightness(br: Int) {
-        sendUDP("BRI\(br)")
+    func setBrightness(br: UInt8) {
+        sendUDP([1,1,br])
+        receiveUDP(IP: hostUDP)
     }
-    func setAcutance(ac: Int) {
-        sendUDP("SPD\(ac)")
+    func setSpeed(speed: UInt8) {
+        sendUDP([2,2,speed])
+        receiveUDP(IP: hostUDP)
     }
-    func setBGBrightness(bgbr: Int){
-        sendUDP("BGB\(bgbr)")
+    func setBGBrightness(bgbr: UInt8){
+        sendUDP([2,1,bgbr])
+        receiveUDP(IP: hostUDP)
     }
     func calibrate() {
-        sendUDP("CAL")
+        sendUDP([3,0,0])
+        receiveUDP(IP: hostUDP)
     }
-    func setColor(hue: Int, saturation: Int){
+    func setColor(hue: UInt8, saturation: UInt8){
         if (hue > 250) {
-            sendUDP("CLR0 0")
+            sendUDP([2,3,0])
+            sendUDP([2,4,0])
         } else {
-            sendUDP("CLR\(hue)\(String(hue).count == 1 ? "   " : String(hue).count == 2 ? "  " : " ")\(saturation)")
+            sendUDP([2,3,hue])
+            sendUDP([2,4,saturation])
         }
     }
     func setEffectChange(effectChange: Bool) {
-        sendUDP("EFCH\(effectChange ? 1 : 0)")
-    }
-    func requestState(){
-        sendUDP("GET")
+        sendUDP([1,2,effectChange ? 1 : 0])
         receiveUDP(IP: hostUDP)
     }
+    func requestState(){
+        sendUDP([0,0,0])
+        receiveUDP(IP: hostUDP)
+    }
+    
     
     func parseMessage() -> Message{
         let a = message.components(separatedBy: " ")
@@ -123,26 +136,22 @@ class Communication {
 
     func connectToUDP(_ hostUDP: NWEndpoint.Host, _ portUDP: NWEndpoint.Port) {
             // Transmited message:
-            print("Connecting...", hostUDP)
-            let messageToUDP = "GET"
-
+            
             self.connection = NWConnection(host: hostUDP, port: portUDP, using: .udp)
 
             self.connection?.stateUpdateHandler = { (newState) in
-                print("This is stateUpdateHandler:")
                 switch (newState) {
                     case .ready:
-                        print("State: Ready\n")
-                        self.sendUDP(messageToUDP)
+                        self.sendUDP([0,0,0])
                         self.receiveUDP(IP: hostUDP)
+                        break;
                     case .setup:
-                        print("State: Setup\n")
+                        break;
                     case .cancelled:
-                        print("State: Cancelled\n")
+                        break;
                     case .preparing:
-                        print("State: Preparing\n")
+                        break;
                     default:
-                        print("ERROR! State not defined!\n")
                         self.ready = true
                 }
             }
@@ -150,7 +159,6 @@ class Communication {
             self.connection?.start(queue: .global())
         }
     func sendUDP(_ content: Data) {
-        print(hostUDP)
             self.connection?.send(content: content, completion: NWConnection.SendCompletion.contentProcessed(({ (NWError) in
                 if (NWError == nil) {
                     print("Data was sent to UDP")
@@ -161,15 +169,12 @@ class Communication {
             })))
         }
 
-        func sendUDP(_ content: String) {
-            print(hostUDP)
-            let contentToSendUDP = content.data(using: String.Encoding.utf8)
+        func sendUDP(_ content: [UInt8]) {
+            let contentToSendUDP: [UInt8] = [47,54,content[0],content[1],content[2]]//content.data(using: String.Encoding.utf8)
             self.connection?.send(content: contentToSendUDP, completion: NWConnection.SendCompletion.contentProcessed(({ (NWError) in
                 if (NWError == nil) {
-                    print("Data was sent to UDP")
                     self.ready = true
                 } else {
-                    print("ERROR! Error when data (Type: Data) sending. NWError: \n \(NWError!)")
                     self.ready = true
                 }
             })))
@@ -177,6 +182,7 @@ class Communication {
 
     func receiveUDP(IP: NWEndpoint.Host) {
             self.connection?.receiveMessage { (data, context, isComplete, error) in
+                print("Receive is complete")
                 if (isComplete) {
                     print("Receive is complete")
                     if (data != nil) {
@@ -184,10 +190,15 @@ class Communication {
                         self.message = backToString
                         print("Received message: \(backToString)")
                         if !self.gotAnswer {
-                            self.gotAnswer = true
-                            self.hostUDP = .init("\(IP)")
-                            self.connectToUDP(self.hostUDP, self.portUDP)
+                            if !self.foundDevicesIP.contains("\(IP)") {
+                                self.foundDevicesIP.append("\(IP)")
+                                let answer: [Any] = [self.parseMessage().ID, self.parseMessage().type, self.parseMessage().size]
+                                self.foundDevices.append(answer)
+                                self.gotAnswer = true
+                            }
+                            print("FLEX: \(IP)")
                         }
+                        
                     } else {
                         print("Data == nil")
                     }

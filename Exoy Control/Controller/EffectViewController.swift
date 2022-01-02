@@ -22,7 +22,7 @@ class EffectViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         self.effectPicker.delegate = self
         self.effectPicker.dataSource = self
         
-        effectList = ["Color", "Color Shift", "Rainbow", "Stroboscope", "Colorful Stroboscope", "Fire", "Volume", "Breathing", "Lines", "Rainbow reaction", "Color reaction", "Life", "Stars Reaction", "Stars", "Volume up"]
+        effectList = ["Color", "Color Shift", "Rainbow", "Stroboscope", "Colorful Stroboscope", "Fire", "Volume", "Breathing", "Lines", "Rainbow reaction", "Color reaction", "Life", "Stars Reaction", "Stars"]
 
     }
     
@@ -43,11 +43,10 @@ class EffectViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        communication.setCurrentMode(mode: row)
+        communication.setCurrentMode(mode: UInt8(bitPattern: Int8(row)))
         dismiss(animated: true, completion: nil)
         controlView?.setSettings()
     }
     
-    
-    
 }
+

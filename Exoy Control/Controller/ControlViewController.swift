@@ -27,15 +27,16 @@ class ControlViewController: UIViewController {
     
     @IBAction func ONOFFpressed(_ sender: UIButton) {
         communication.togglePower()
+        setSettings()
     }
     @IBAction func brSliderChange(_ sender: UISlider) {
-        communication.setBrightness(br: Int(sender.value))
+        communication.setBrightness(br: UInt8(sender.value+100))
     }
     @IBAction func acSliderChange(_ sender: UISlider) {
-        communication.setAcutance(ac: Int(sender.value))
+        communication.setSpeed(speed: UInt8(sender.value))
     }
     @IBAction func bgBrSliderChange(_ sender: UISlider) {
-        communication.setBGBrightness(bgbr: Int(sender.value))
+        communication.setBGBrightness(bgbr: UInt8(sender.value))
     }
     @IBAction func calibratePressed(_ sender: UIButton) {
         communication.calibrate()
@@ -49,7 +50,7 @@ class ControlViewController: UIViewController {
         if sender.value > 250 {
             sender.tintColor = UIColor.gray
         }
-        communication.setColor(hue: Int(sender.value), saturation: 255)
+        communication.setColor(hue: UInt8(sender.value), saturation: 255)
     }
     @IBAction func effectChangeSwitchPressed(_ sender: UISwitch) {
         communication.setEffectChange(effectChange: sender.isOn)
@@ -65,6 +66,11 @@ class ControlViewController: UIViewController {
     }
     
     func setUpInterface(){
+        acutanceSlider.isContinuous = false
+        brightnessSlider.isContinuous = false
+        bgBrigthnessSlider.isContinuous = false
+        colorSlider.isContinuous = false
+        
         startCalibrationBtn.layer.cornerRadius = startCalibrationBtn.frame.height / 2
         backBtn.layer.cornerRadius = backBtn.frame.height / 2
         
@@ -74,12 +80,13 @@ class ControlViewController: UIViewController {
     func setSettings(){
 
         acutanceSlider.setValue(Float(communication.getSpeed()), animated: true)
-        brightnessSlider.setValue(Float(communication.getBrightness()), animated: true)
+        brightnessSlider.setValue(Float(communication.getBrightness())+100, animated: true)
         bgBrigthnessSlider.setValue(Float(communication.getBGBrightness()), animated: true)
         colorSlider.setValue(Float(communication.getHue()), animated: true)
         colorSlider.tintColor = UIColor(hue: CGFloat(communication.getHue()/255), saturation: 1, brightness: 1, alpha: 1)
-        if communication.getHue() > 250 {
+        if communication.getHue() == 0 {
             colorSlider.tintColor = UIColor.gray
+            colorSlider.setValue(255, animated: true)
         }
     }
     
