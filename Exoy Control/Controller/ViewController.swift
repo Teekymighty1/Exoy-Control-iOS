@@ -33,37 +33,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         setUpInterface()
         
         load()
+        print("load ended")
     }
     
     func load() {
             DispatchQueue.global(qos: .utility).async {
                 DispatchQueue.main.async {
                     self.foundDevices = self.communication.getFoundDevices()
-                    print("FLEX: \(self.foundDevices)")
                     var product = ""
+                    var name = ""
+                    
                     for i in 1..<self.foundDevices.count{
-                        switch self.foundDevices[i][1] as! Int{
-                        case 1:
-                            product = "hypercube"
-                            break
-                        case 2:
-                            product = "hypercube"
-                            break
-                        case 3:
-                            product = "dodecahedron"
-                            break
-                        case 4:
-                            product = "dodecahedron"
-                            break
-                        default:
-                            product = "mirror"
-                        }
-                        self.productTitles[i].text = "Exoy \(product.capitalized)"
-                        self.namesL[i].text = "\(product.capitalized) #\(self.foundDevices[i][0])"
+                        let names = self.communication.getDeviceName(type: self.foundDevices[i][1] as! Int)
+                        product = names[0]
+                        name = names[1]
+                        self.productTitles[i].text = "Exoy \(name)"
+                        self.namesL[i].text = "\(name) #\(self.foundDevices[i][0])"
                         self.productImgs[i].image = UIImage(named: product)
                         self.deviceSV[i].isHidden = false
                     }
@@ -75,14 +63,28 @@ class ViewController: UIViewController {
     
     
     @IBAction func connectBtnPressed(_ sender: UIButton) {
-        print("AAAAA: \(sender.tag)")
         self.communication.connect(num: Int("\(sender.tag)")!)
         performSegue(withIdentifier: "goToControl", sender: self)
     }
     @IBAction func refreshBtnPressed(_ sender: UIButton) {
-        load()
         self.activityIndicator.startAnimating()
+        self.loadFinished = false
+        load()
     }
+    @IBAction func fbBtnPressed(_ sender: Any) {
+        UIApplication.shared.open(URL(string: "https://www.facebook.com/exoylighting")!, options: [:], completionHandler: nil)
+    }
+    @IBAction func instBtnPressed(_ sender: Any) {
+        UIApplication.shared.open(URL(string: "https://www.instagram.com/exoylighting/")!, options: [:], completionHandler: nil)
+    }
+    @IBAction func helpBtnPressed(_ sender: Any) {
+        UIApplication.shared.open(URL(string: "https://exoy.eu/pages/contact-us")!, options: [:], completionHandler: nil)
+    }
+    @IBAction func cartBtnPressed(_ sender: Any) {
+        UIApplication.shared.open(URL(string: "https://www.exoy.eu")!, options: [:], completionHandler: nil)
+    }
+    
+
     
     
     
@@ -103,11 +105,5 @@ class ViewController: UIViewController {
     }
 }
 
-extension NSObject {
-    func copyObject<T:NSObject>() throws -> T? {
-        let data = try NSKeyedArchiver.archivedData(withRootObject:self, requiringSecureCoding:false)
-        return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
-    }
-}
 
 

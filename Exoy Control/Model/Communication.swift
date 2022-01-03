@@ -27,6 +27,7 @@ class Communication {
     
     func search() {
         var i = 1
+        print("search started, i = ", i)
         while i < 254 {
             if (ready) {
                 hostUDP = .init("192.168.8.\(i)")
@@ -35,11 +36,19 @@ class Communication {
                 i+=1
             }
         }
-        connectToUDP(hostUDP, portUDP)
-        
+        i = 1
+        while i < 10 {
+            if (ready) {
+                hostUDP = .init("192.168.4.\(i)")
+                connectToUDP(hostUDP, portUDP)
+                ready = false
+                i+=1
+            }
+        }
     }
     
     func getFoundDevices() -> [[Any]]{
+        ready = true
         search()
         while !gotAnswer {
             
@@ -76,6 +85,9 @@ class Communication {
     }
     func getHue() -> Int{
         return parseMessage().hue
+    }
+    func isOn() -> Bool{
+        return parseMessage().on
     }
     
     
@@ -121,9 +133,79 @@ class Communication {
         sendUDP([1,2,effectChange ? 1 : 0])
         receiveUDP(IP: hostUDP)
     }
+    func restart() {
+        sendUDP([4,0,0])
+    }
     func requestState(){
         sendUDP([0,0,0])
         receiveUDP(IP: hostUDP)
+    }
+    func getDeviceName(type: Int) -> [String] {
+        var product = ""
+        var name = ""
+        switch(type) {
+            case 1:
+                product = "hypercube"
+                name = "Hypercube"
+                break
+            case 2:
+                product = "udhypercube"
+                name = "Ultra Dense Hypercube"
+                break
+            case 3:
+                product = "dodecahedron"
+                name = "Dodecahedron"
+                break
+            case 4:
+                product = "uddodecahedron"
+                name = "Ultra Dense Dodecahedron"
+                break
+            case 5:
+                product = "mirror"
+                name = "Mirror"
+                break
+            case 6:
+                product = "udmirror"
+                name = "Ultra Dense Mirror"
+                break
+            case 7:
+                product = "icosahedron"
+                name = "Icosahedron"
+                 break
+            case 8:
+                product = "udicosahedron"
+                name = "Ultra Dense Icosahedron"
+                break
+            case 9:
+                product = "tetrahedron"
+                name = "Tetrahedron"
+                break
+            case 10:
+                product = "udtetrahedron"
+                name = "Ultra Dense Tetrahedron"
+                break
+            case 11:
+                product = "hexagon"
+                name = "Hexagon"
+                break
+            case 12:
+                product = "udhexagon"
+                name = "Ultra Dense Hexagon"
+                break
+            case 13:
+                product = "soundvisualiser"
+                name = "Sound Visualiser"
+                break
+            case 14:
+                product = "udsoundvisualiser"
+                name = "Ultra Dense Sound Visualiser"
+                break
+            default:
+                product = "infinityobject"
+                name = "Infinity Object"
+                break
+        }
+        return [product, name]
     }
     
     
@@ -152,7 +234,7 @@ class Communication {
                     case .preparing:
                         break;
                     default:
-                        self.ready = true
+                        break;
                 }
             }
 
