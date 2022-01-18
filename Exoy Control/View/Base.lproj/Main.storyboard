@@ -27,7 +27,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="axD-K9-2xp">
-                                <rect key="frame" x="0.0" y="44" width="428" height="680"/>
+                                <rect key="frame" x="0.0" y="44" width="428" height="742"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7b7-4d-ald">
                                         <rect key="frame" x="0.0" y="0.0" width="428" height="50"/>
@@ -228,7 +228,7 @@
                                                                             <constraint firstAttribute="width" constant="50" id="9hw-mM-dS3"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nbo-mn-RUA" userLabel="2">
+                                                                    <button opaque="NO" tag="1" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nbo-mn-RUA" userLabel="2">
                                                                         <rect key="frame" x="49.999999999999986" y="0.0" width="209.33333333333331" height="46.333333333333336"/>
                                                                         <color key="backgroundColor" systemColor="linkColor"/>
                                                                         <state key="normal" title="CONNECT">
@@ -298,7 +298,7 @@
                                                                             <constraint firstAttribute="width" constant="50" id="eWp-GA-ajE"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="of9-Jr-47g" userLabel="3">
+                                                                    <button opaque="NO" tag="2" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="of9-Jr-47g" userLabel="3">
                                                                         <rect key="frame" x="49.999999999999986" y="0.0" width="209.33333333333331" height="46.333333333333336"/>
                                                                         <color key="backgroundColor" systemColor="linkColor"/>
                                                                         <state key="normal" title="CONNECT">
@@ -368,7 +368,7 @@
                                                                             <constraint firstAttribute="width" constant="50" id="Ejj-Hk-vn0"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EqW-rg-P5l" userLabel="4">
+                                                                    <button opaque="NO" tag="3" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EqW-rg-P5l" userLabel="4">
                                                                         <rect key="frame" x="49.999999999999986" y="0.0" width="209.33333333333331" height="46.333333333333336"/>
                                                                         <color key="backgroundColor" systemColor="linkColor"/>
                                                                         <state key="normal" title="CONNECT">
@@ -399,6 +399,12 @@
                                             <constraint firstAttribute="height" constant="40" id="3K8-AY-BFs"/>
                                         </constraints>
                                     </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anp-R6-rHW">
+                                        <rect key="frame" x="0.0" y="695" width="428" height="47"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="7b7-4d-ald" firstAttribute="leading" secondItem="axD-K9-2xp" secondAttribute="leading" id="LPB-hQ-fHx"/>
@@ -472,6 +478,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="dGM-HD-Eih" id="S8y-RG-9cG"/>
                         <outlet property="conteinerStackView" destination="axD-K9-2xp" id="fFp-JK-YvP"/>
+                        <outlet property="warningLabel" destination="anp-R6-rHW" id="0hH-EH-cZa"/>
                         <outletCollection property="deviceSV" destination="VFT-rC-2t6" collectionClass="NSMutableArray" id="QXJ-Mo-dpV"/>
                         <outletCollection property="namesL" destination="iFh-Jb-W8M" collectionClass="NSMutableArray" id="ZTK-we-VBJ"/>
                         <outletCollection property="connectBtns" destination="Ubg-yw-Zsp" collectionClass="NSMutableArray" id="yGP-LQ-t6E"/>
@@ -721,6 +728,7 @@
                         <outlet property="bgBrigthnessSlider" destination="VMZ-DE-pZm" id="IeK-Qz-Smr"/>
                         <outlet property="brightnessSlider" destination="F4q-9B-8Ju" id="vu9-u2-Va2"/>
                         <outlet property="colorSlider" destination="p3w-gt-rNe" id="cZu-M9-cfQ"/>
+                        <outlet property="effectChangeSwitch" destination="hW5-l4-ViS" id="Xtu-kT-7LZ"/>
                         <outlet property="powerBtn" destination="g5S-IK-EOR" id="NCv-7b-oJb"/>
                         <outlet property="productName" destination="IHQ-yp-fQZ" id="4Ne-HF-h6G"/>
                         <outlet property="restartBtn" destination="BMI-AE-LI9" id="tfd-Wc-LYC"/>

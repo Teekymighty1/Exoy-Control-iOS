@@ -17,10 +17,12 @@ class ControlViewController: UIViewController {
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var powerBtn: UIButton!
     @IBOutlet weak var restartBtn: UIButton!
+    @IBOutlet weak var effectChangeSwitch: UISwitch!
     @IBOutlet weak var productName: UILabel!
     
     var communication = Communication()
     var productOn = false
+    var timer = Timer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,24 +30,35 @@ class ControlViewController: UIViewController {
         
         setUpInterface()
         setSettings()
+        setSettingsDelay()
+    }
+    
+    func setSettingsDelay() {
+        timer.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(setSettings), userInfo: nil, repeats: false)
     }
     
     @IBAction func ONOFFpressed(_ sender: UIButton) {
         communication.togglePower()
         productOn = !productOn
         powerBtn.setImage(UIImage(named: (productOn ? "poweron" : "poweroff")), for: .normal)
+        setSettingsDelay()
     }
     @IBAction func brSliderChange(_ sender: UISlider) {
         communication.setBrightness(br: UInt8(sender.value+100))
+        setSettingsDelay()
     }
     @IBAction func acSliderChange(_ sender: UISlider) {
         communication.setSpeed(speed: UInt8(sender.value))
+        setSettingsDelay()
     }
     @IBAction func bgBrSliderChange(_ sender: UISlider) {
         communication.setBGBrightness(bgbr: UInt8(sender.value))
+        setSettingsDelay()
     }
     @IBAction func calibratePressed(_ sender: UIButton) {
         communication.calibrate()
+        setSettingsDelay()
     }
     @IBAction func effectBtnPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "goToEffects", sender: self)
@@ -61,9 +74,11 @@ class ControlViewController: UIViewController {
             sender.tintColor = UIColor.gray
         }
         communication.setColor(hue: UInt8(sender.value), saturation: 255)
+        setSettingsDelay()
     }
     @IBAction func effectChangeSwitchPressed(_ sender: UISwitch) {
         communication.setEffectChange(effectChange: sender.isOn)
+        setSettingsDelay()
     }
 
 
@@ -86,11 +101,10 @@ class ControlViewController: UIViewController {
         
         startCalibrationBtn.layer.cornerRadius = startCalibrationBtn.frame.height / 2
         backBtn.layer.cornerRadius = backBtn.frame.height / 2
-        productName.text = "Exoy " + communication.getDeviceName(type: communication.getType())[1]
         
     }
     
-    func setSettings(){
+    @objc func setSettings(){
         powerBtn.setImage(UIImage(named: (communication.isOn() ? "poweron" : "poweroff")), for: .normal)
         acutanceSlider.setValue(Float(communication.getSpeed()), animated: true)
         brightnessSlider.setValue(Float(communication.getBrightness())-100, animated: true)
@@ -101,6 +115,8 @@ class ControlViewController: UIViewController {
             colorSlider.tintColor = UIColor.gray
             colorSlider.setValue(255, animated: true)
         }
+        productName.text = "Exoy " + communication.getDeviceName(type: communication.getType())[1]
+        effectChangeSwitch.isOn = communication.getEffectChange()
     }
     
     

@@ -45,7 +45,7 @@ class EffectViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         communication.setCurrentMode(mode: UInt8(bitPattern: Int8(row)))
         dismiss(animated: true, completion: nil)
-        controlView?.setSettings()
+        controlView?.setSettingsDelay()
     }
     
 }

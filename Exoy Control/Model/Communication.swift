@@ -8,6 +8,12 @@
 import Foundation
 import Network
 
+enum Network: Error {
+    case noWiFiConnection
+    case hostIsDown
+    case unknown
+}
+
 class Communication {
     var IP: NWEndpoint.Host = ""
     
@@ -25,12 +31,16 @@ class Communication {
     var foundDevicesIP: [String] = []
     var foundDevices: [[Any]] = [[]]
     
-    func search() {
-        var i = 1
-        print("search started, i = ", i)
-        while i < 254 {
+    func search() throws {
+        var i = 0
+        let IP = getWiFiAddress()
+        if (IP == nil) {
+            throw Network.noWiFiConnection
+        }
+        
+        while i < 250 {
             if (ready) {
-                hostUDP = .init("192.168.8.\(i)")
+                hostUDP = .init("192.168.\(IP!.split(separator: ".")[2]).\(i)")
                 connectToUDP(hostUDP, portUDP)
                 ready = false
                 i+=1
@@ -45,19 +55,29 @@ class Communication {
                 i+=1
             }
         }
+        while i < 10 {
+            if (ready) {
+                hostUDP = .init("192.168.2.\(i)")
+                connectToUDP(hostUDP, portUDP)
+                ready = false
+                i+=1
+            }
+        }
+    }
+    
+    func startSearch() throws {
+        ready = true
+        do{
+            try search()
+        }
+        catch Network.noWiFiConnection {
+            throw Network.noWiFiConnection
+        }
     }
     
     func getFoundDevices() -> [[Any]]{
-        ready = true
-        search()
-        while !gotAnswer {
-            
-        }
-        if gotAnswer {
-            gotAnswer = false
-            return foundDevices
-        }
-        return []
+        print(foundDevicesIP)
+        return foundDevices
     }
     
     func connect(num: Int) {
@@ -88,6 +108,9 @@ class Communication {
     }
     func isOn() -> Bool{
         return parseMessage().on
+    }
+    func getEffectChange() -> Bool{
+        return parseMessage().effectChange
     }
     
     
@@ -135,6 +158,10 @@ class Communication {
     }
     func restart() {
         sendUDP([4,0,0])
+    }
+    func confirmConnection() {
+        sendUDP([0,1,0])
+        receiveUDP(IP: hostUDP)
     }
     func requestState(){
         sendUDP([0,0,0])
@@ -214,13 +241,18 @@ class Communication {
         let response: Message = Message.init(ID: Int(a[1])!, type: Int(a[2])!, size: String(a[3]), currentMode: Int(a[4])!, brightness: Int(a[5])!, BGBrightness: Int(a[6])!, speed: Int(a[7])!, hue: Int(a[8])!, saturation: Int(a[9])!, effectChange: a[10] == "1",on: a[11] == "1")
         return response
     }
+    func parseMessage(message: String) -> Message{
+        let a = message.components(separatedBy: " ")
+        let response: Message = Message.init(ID: Int(a[1])!, type: Int(a[2])!, size: String(a[3]), currentMode: Int(a[4])!, brightness: Int(a[5])!, BGBrightness: Int(a[6])!, speed: Int(a[7])!, hue: Int(a[8])!, saturation: Int(a[9])!, effectChange: a[10] == "1",on: a[11] == "1")
+        return response
+    }
 
 
     func connectToUDP(_ hostUDP: NWEndpoint.Host, _ portUDP: NWEndpoint.Port) {
             // Transmited message:
             
             self.connection = NWConnection(host: hostUDP, port: portUDP, using: .udp)
-
+            let hostDown = false
             self.connection?.stateUpdateHandler = { (newState) in
                 switch (newState) {
                     case .ready:
@@ -230,6 +262,8 @@ class Communication {
                     case .setup:
                         break;
                     case .cancelled:
+                        print("NEXUS 1")
+                        //throw Network.hostIsDown
                         break;
                     case .preparing:
                         break;
@@ -237,49 +271,41 @@ class Communication {
                         break;
                 }
             }
+        
+            
 
             self.connection?.start(queue: .global())
         }
-    func sendUDP(_ content: Data) {
-            self.connection?.send(content: content, completion: NWConnection.SendCompletion.contentProcessed(({ (NWError) in
-                if (NWError == nil) {
-                    print("Data was sent to UDP")
-                } else {
-                    print("ERROR! Error when data (Type: Data) sending. NWError: \n \(NWError!)")
-                    self.ready = true
-                }
-            })))
-        }
-
-        func sendUDP(_ content: [UInt8]) {
+    func sendUDP(_ content: [UInt8]) {
+            guard let connection = self.connection else {
+                return
+            }
             let contentToSendUDP: [UInt8] = [47,54,content[0],content[1],content[2]]//content.data(using: String.Encoding.utf8)
-            self.connection?.send(content: contentToSendUDP, completion: NWConnection.SendCompletion.contentProcessed(({ (NWError) in
+            connection.send(content: contentToSendUDP, completion: NWConnection.SendCompletion.contentProcessed(({ (NWError) in
                 if (NWError == nil) {
                     self.ready = true
                 } else {
-                    self.ready = true
+                   print("NEXUS 2")
+                    //throw Network.hostIsDown
                 }
             })))
         }
 
     func receiveUDP(IP: NWEndpoint.Host) {
             self.connection?.receiveMessage { (data, context, isComplete, error) in
-                print("Receive is complete")
                 if (isComplete) {
-                    print("Receive is complete")
                     if (data != nil) {
                         let backToString = String(decoding: data!, as: UTF8.self)
                         self.message = backToString
                         print("Received message: \(backToString)")
-                        if !self.gotAnswer {
-                            if !self.foundDevicesIP.contains("\(IP)") {
-                                self.foundDevicesIP.append("\(IP)")
-                                let answer: [Any] = [self.parseMessage().ID, self.parseMessage().type, self.parseMessage().size]
-                                self.foundDevices.append(answer)
-                                self.gotAnswer = true
-                            }
-                            print("FLEX: \(IP)")
+                        if !self.foundDevicesIP.contains("\(IP)") {
+                            self.foundDevicesIP.append("\(IP)")
+                            let msg = self.parseMessage(message: backToString)
+                            let answer: [Any] = [msg.ID, msg.type, msg.size]
+                            self.foundDevices.append(answer)
+                            print(answer)
                         }
+                        print("FLEX: \(IP)")
                         
                     } else {
                         print("Data == nil")
@@ -287,4 +313,38 @@ class Communication {
                 }
             }
         }
+    func getWiFiAddress() -> String? {
+       var address : String?
+
+       // Get list of all interfaces on the local machine:
+       var ifaddr : UnsafeMutablePointer<ifaddrs>?
+       guard getifaddrs(&ifaddr) == 0 else { return nil }
+       guard let firstAddr = ifaddr else { return nil }
+
+       // For each interface ...
+       for ifptr in sequence(first: firstAddr, next: { $0.pointee.ifa_next }) {
+           let interface = ifptr.pointee
+
+           // Check for IPv4 or IPv6 interface:
+           let addrFamily = interface.ifa_addr.pointee.sa_family
+           //if addrFamily == UInt8(AF_INET) || addrFamily == UInt8(AF_INET6) {  // **ipv6 committed
+           if addrFamily == UInt8(AF_INET){
+
+               // Check interface name:
+               let name = String(cString: interface.ifa_name)
+               if  name == "en0" {
+
+                   // Convert interface address to a human readable string:
+                   var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+                   getnameinfo(interface.ifa_addr, socklen_t(interface.ifa_addr.pointee.sa_len),
+                               &hostname, socklen_t(hostname.count),
+                               nil, socklen_t(0), NI_NUMERICHOST)
+                   address = String(cString: hostname)
+               }
+           }
+       }
+       freeifaddrs(ifaddr)
+
+       return address
+   }
 }
